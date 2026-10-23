@@ -126,18 +126,19 @@ with aba_visao:
 with aba_modelos:
     st.header("Comparação dos modelos avaliados")
 
-    dados_modelos = pd.DataFrame({
+   dados_modelos = pd.DataFrame({
         "Modelo": [
             "Regressão Logística",
             "Árvore de Decisão",
             "Random Forest",
-            "Gradient Boosting"
+            "Gradient Boosting",
+            "DummyClassifier (baseline)"
         ],
-        "Acurácia": [0.8667, 0.7808, 0.8599, 0.8576],
-        "Precisão": [0.8547, 0.6573, 0.8604, 0.8319],
-        "Recall": [0.7042, 0.6620, 0.6725, 0.6972],
-        "F1-Score": [0.7722, 0.6596, 0.7549, 0.7586],
-        "AUC": [0.9126, 0.7495, 0.8995, 0.9066]
+        "Acurácia": [0.8667, 0.7808, 0.8599, 0.8576, 0.6791],
+        "Precisão": [0.8547, 0.6573, 0.8604, 0.8319, 0.0000],
+        "Recall": [0.7042, 0.6620, 0.6725, 0.6972, 0.0000],
+        "F1-Score": [0.7722, 0.6596, 0.7549, 0.7586, 0.0000],
+        "AUC": [0.9126, 0.7495, 0.8995, 0.9066, 0.5000]
     })
 
     st.dataframe(
@@ -171,11 +172,13 @@ with aba_modelos:
     st.plotly_chart(fig_modelos, use_container_width=True)
 
     st.caption(
-        "As métricas desta comparação foram calculadas na avaliação "
-        "inicial dos modelos com limiar 0,50. A avaliação final da "
-        "Regressão Logística com limiar 0,30 é apresentada na visão geral."
+        "Os quatro primeiros modelos foram avaliados inicialmente "
+        "com limiar de classificação 0,50. O DummyClassifier "
+        "(baseline) prevê todos os estudantes como não evadidos: "
+        "por isso, apesar da acurácia de 67,91%, seu recall para "
+        "evasão é 0%. A avaliação final da Regressão Logística "
+        "com limiar 0,30 é apresentada na visão geral."
     )
-
 # --------------------------------------------------
 # 6. Simulação de previsões
 # --------------------------------------------------
@@ -315,11 +318,19 @@ with aba_metodologia:
         **Divisão dos dados:** 80% para treinamento e 20% para teste,
         com estratificação das classes.
 
-        **Modelos comparados:** Regressão Logística, Árvore de Decisão,
-        Random Forest e Gradient Boosting.
+        **Modelos comparados:** Regressão Logística, Árvore de
+        Decisão, Random Forest, Gradient Boosting e DummyClassifier
+        como modelo de referência (baseline).
 
         **Modelo utilizado nas simulações:** Regressão Logística,
         com limiar de classificação 0,30.
+
+        **Escolha final:** Regressão Logística com limiar de
+        classificação 0,30, priorizando a identificação de casos
+        de evasão.
+
+        **Critério de comparação:** além da acurácia, foram
+        analisadas precisão, recall, F1-score e AUC.
         """
     )
 
