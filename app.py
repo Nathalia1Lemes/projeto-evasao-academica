@@ -126,7 +126,7 @@ with aba_visao:
 with aba_modelos:
     st.header("Comparação dos modelos avaliados")
 
-   dados_modelos = pd.DataFrame({
+    dados_modelos = pd.DataFrame({
         "Modelo": [
             "Regressão Logística",
             "Árvore de Decisão",
